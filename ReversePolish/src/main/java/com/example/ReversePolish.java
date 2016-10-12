@@ -1,5 +1,9 @@
 package com.example;
 
+import java.util.Arrays;
+import java.util.Stack;
+import java.util.function.Predicate;
+
 /**
  * Created by dev on 10/11/16.
  */
@@ -9,24 +13,40 @@ public class ReversePolish {
     static String MUL = "*";
     static String DIV = "/";
 
+    Predicate<String> isNumeric = x->x.matches("[-+]?\\d*\\.?\\d+");
+
     public Double calc(String args) {
-        int index = 0;
         String[] params = args.split(" ");
-        Double left = null;
-        if (params.length >= 3) {
-            while (index < params.length) {
-                left = apply(left != null ? left : new Double(params[index++]), params[index++], params[index++]);
-            }
-        }
-        return left;
+        Stack<String> stack=new Stack();
+        Arrays.stream(params).forEach(x->process(stack, x));
+        return new Double(stack.pop());
     }
 
-    private Double apply(Double dLeft, String right, String operator) {
-        Double dRight = new Double(right);
+
+    private void process(Stack<String> stack, String x) {
+        if (!isNumeric.test(x) ) {
+            String right = stack.pop();
+            String left = stack.pop();
+            stack.push(apply(new Double(left), new Double(right), x).toString());
+        }else {
+            stack.push(x);
+        }
+
+    }
+
+    private Double apply(Double dLeft, Double dRight, String operator) {
         if (operator.equals(ADD)) return dLeft + dRight;
         else if (operator.equals(SUB)) return dLeft - dRight;
         else if (operator.equals(MUL)) return dLeft *  dRight;
         else if (operator.equals(DIV)) return dLeft / dRight;
         else return 0d;
     }
+//
+//     Function<List<String>, Double> apply1 = (List<String> operands) -> {
+//        String operator=operands.get(2);
+//        Double dLeft = new Double(operands.get(0));
+//        Double dRight = new Double(operands.get(1));
+//        return apply(dLeft, dRight, operator);
+//    };
+
 }
