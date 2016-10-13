@@ -15,15 +15,44 @@ public class ReversePolish {
 
     Predicate<String> isNumeric = x->x.matches("[-+]?\\d*\\.?\\d+");
 
-    public Double calc(String args) {
+    public Double calcNonFunc(String args) {
         String[] params = args.split(" ");
         Stack<String> stack=new Stack();
-        Arrays.stream(params).forEach(x->process(stack, x));
+        Arrays.stream(params).forEach(x->processNonFunc(stack, x));
         return new Double(stack.pop());
     }
 
+    public Double calc(String args) {
+        String[] params = args.split(" ");
+        return  new Double(process(params[0],Arrays.copyOfRange(params,1, params.length)).pop());
+    }
 
-    private void process(Stack<String> stack, String x) {
+    private Stack<String> process(String left, String[] remainingParams) {
+        Stack<String> stack = new Stack<String>();
+        String result;
+        if(remainingParams.length==1){
+            stack.push(remainingParams[0]);
+            stack.push(left);
+            return stack;
+        }
+        if (!isNumeric.test(remainingParams[1])){
+            result = apply(new Double(left), new Double(remainingParams[0]), remainingParams[1]).toString();
+            if (remainingParams.length>2) {
+                String[] temp =Arrays.copyOfRange(remainingParams,2,remainingParams.length);
+                return process(result, temp);
+            };
+        }else{
+            Stack<String> rightStack = process(remainingParams[0], Arrays.copyOfRange(remainingParams,1,remainingParams.length));
+            result = apply(new Double(left), new Double(rightStack.pop()), rightStack.pop()).toString();
+            if (!rightStack.empty()){
+                return process(result, (String[])rightStack.toArray());
+            }
+        }
+        stack.push(result);
+        return stack;
+    }
+
+    private void processNonFunc(Stack<String> stack, String x) {
         if (!isNumeric.test(x) ) {
             String right = stack.pop();
             String left = stack.pop();
