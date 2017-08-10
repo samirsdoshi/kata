@@ -5,6 +5,8 @@ repositories {
     mavenCentral()
 }
 
+apply plugin: 'idea'
+
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.4'
     testCompile 'junit:junit:4.12'

@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/NumToWord.iml" filepath="$PROJECT_DIR$/NumToWord.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/NumToWord.iml" filepath="$PROJECT_DIR$/.idea/modules/NumToWord.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/NumToWord_main.iml" filepath="$PROJECT_DIR$/.idea/modules/NumToWord_main.iml" group="NumToWord" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/NumToWord_test.iml" filepath="$PROJECT_DIR$/.idea/modules/NumToWord_test.iml" group="NumToWord" />
     </modules>
   </component>
 </project>
