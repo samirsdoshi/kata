@@ -1,0 +1,18 @@
+# build directories #
+target
+build
+.gradle
+
+# Project files #
+.project
+.classpath
+.idea
+*.ipr
+*.iml
+*.iws
+
+# Package Files #
+*.jar
+*.war
+*.ear
+testapp.iws
